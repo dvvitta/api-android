@@ -19,19 +19,19 @@ export class BooksController {
     }
     
 
-    // Mengupdate data
-    @Put(':id')
-    updateData(@Param('id') id: string, @Body() createBookDto: CreateBookDto) : String{
-        this.booksService.updateData(+id, createBookDto);
-        return `Mengupdate data buku dengan id ${id}`;
-    }
+    // // Mengupdate data
+    // @Put(':id')
+    // updateData(@Param('id') id: string, @Body() createBookDto: CreateBookDto) : String{
+    //     this.booksService.updateData(+id, createBookDto);
+    //     return `Mengupdate data buku dengan id ${id}`;
+    // }
 
-    // Menghapus data
-    @Delete(':id')
-    hapusData(@Param('id') id: string) : String{
-        this.booksService.hapusData(+id);
-        return `Menghapus data buku dengan id ${id}`;
-    }
+    // // Menghapus data
+    // @Delete(':id')
+    // hapusData(@Param('id') id: string) : String{
+    //     this.booksService.hapusData(+id);
+    //     return `Menghapus data buku dengan id ${id}`;
+    // }
 
 }
 

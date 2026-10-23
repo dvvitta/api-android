@@ -1,0 +1,21 @@
+services:
+  # Nama service container db
+  postgres-db: 
+    image: postgres:16-alpine
+    container_name: harkat_postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_DB: harkat_store_db
+    ports:
+      # formatnya perkomputer kita PortServiceContainer
+      - "5432:5432"
+    volumes:
+      # menyimpan data db
+      - postgres_data_volume:/var/lib/postgresql/data
+
+
+
+volumes:
+  postgres_data_volume:
