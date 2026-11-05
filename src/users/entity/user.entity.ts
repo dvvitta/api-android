@@ -1,0 +1,43 @@
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Order } from '../../orders/entities/orders.entity.js';
+import { CustomerAddress } from '../../customer_address/entites/customer_address.entity.js';
+
+@Entity({ name: 'users' })
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', length: 150 })
+  name: string;
+
+  @Column({ type: 'varchar', length: 150, unique: true })
+  email: string;
+
+  @Column({ type: 'varchar', length: 20 })
+  phone: string;
+
+  @OneToMany(() => Order, (order: Order) => order.user, { cascade: true })
+  orders: Order[];
+
+  @OneToMany(() => CustomerAddress, (address) => address.user, {
+    cascade: true,
+  })
+  addresses: CustomerAddress[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt: Date;
+}

@@ -1,33 +1,69 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-@Entity({name:'books'})
-export class Book{
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  type Relation,
+} from 'typeorm';
+import { Category } from '../../categories/entities/catagories-entity.js'; 
+import { Publisher } from '../../publishers/entities/publishers.entity.js';
+import { BookAuthor } from '../../book_authors/entities/book_authors.entity.js';
+import { OrderItem } from '../../order_items/entities/order_items.entity.js';
 
-    @Column({type: 'varchar', length:65})
-    title: string;
+@Entity({ name: 'books' })
+export class Book {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({type: 'varchar', length: 100})
-    author: string;
+  @Column({ type: 'varchar', length: 150 })
+  title: string;
 
-    @Column({type:'varchar'})
-    isbn: string;
+  @Column({ type: 'varchar', length: 45, unique: true })
+  isbn: string;
 
-    @Column({type: 'int', default:0})
-    publishedYear: number;
+  @Column({ name: 'published_year', type: 'int', default: 0 })
+  publishedYear: number;
 
-    @Column({type:'boolean', default:true})
-    isAvailable: boolean;
+  @Column({ name: 'is_available', type: 'boolean', default: true })
+  isAvailable: boolean;
 
-    @CreateDateColumn({name: 'created_at'})
-    createdAt: Date;
+  @Column({ type: 'decimal', precision: 12, scale: 2, default: 0.0 })
+  price: number;
 
-    @UpdateDateColumn({name: 'updated_at'})
-    updateAt: Date;
+  @Column({ type: 'int', default: 0 })
+  stock: number;
 
-    @DeleteDateColumn({name: 'deleted_at', nullable:true})
-    deletedAt: Date;
+  @ManyToOne(() => Category, (category) => category.books, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'category_id' })
+  category: Relation<Category>;
 
+  @ManyToOne(() => Publisher, (publisher) => publisher.books, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'publisher_id' })
+  publisher: Relation<Publisher>;
 
+  @OneToMany(() => BookAuthor, (bookAuthor) => bookAuthor.book)
+  bookAuthors: Relation<BookAuthor>[];
 
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.book)
+  orderItems: Relation<OrderItem>[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updateAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt: Date;
 }
