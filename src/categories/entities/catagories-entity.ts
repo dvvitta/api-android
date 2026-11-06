@@ -1,30 +1,26 @@
 import {
+  Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
-  type Relation,
+  DeleteDateColumn, 
 } from 'typeorm';
-import { Book } from '../../books/entities/book-entity.js';
 
 @Entity({ name: 'categories' })
 export class Category {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 65, unique: true })
+  @Column({ type: 'varchar', length: 65 })
   nama: string;
-
-  @OneToMany(() => Book, (book) => book.category, {
-    cascade: true,
-  })
-  books: Relation<Book>[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updateAt: Date;
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt?: Date;
 }

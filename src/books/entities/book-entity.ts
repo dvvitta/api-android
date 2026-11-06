@@ -38,12 +38,12 @@ export class Book {
   @Column({ type: 'int', default: 0 })
   stock: number;
 
-  @ManyToOne(() => Category, (category) => category.books, {
-    nullable: true,
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'category_id' })
-  category: Relation<Category>;
+  // @ManyToOne(() => Category, (category) => category.books, {
+  //   nullable: true,
+  //   onDelete: 'SET NULL',
+  // })
+  // @JoinColumn({ name: 'category_id' })
+  // category: Relation<Category>;
 
   @ManyToOne(() => Publisher, (publisher) => publisher.books, {
     nullable: true,

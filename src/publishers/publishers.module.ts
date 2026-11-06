@@ -5,7 +5,7 @@ import { PublishersController } from './publishers.controller.js';
 import { Publisher } from './entities/publishers.entity.js'; // Sesuaikan nama filenya
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Publisher])], // <-- Wajib ada agar autoLoadEntities mendeteksi Publisher
+  imports: [TypeOrmModule.forFeature([Publisher])], 
   controllers: [PublishersController],
   providers: [PublishersService],
   exports: [TypeOrmModule],
